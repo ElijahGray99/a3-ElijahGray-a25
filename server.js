@@ -188,8 +188,10 @@ app.post('/login_user', async function (req, res) {
         req.session.username = user_login.name;
 
         console.log("User: " + user_login.name + "has logged in!");
+        await auto_update_table(req, res);
 
     }
+
 
     res.json({username: user_login.name });
 })
@@ -340,7 +342,9 @@ async function delete_data(JSONObject, user_id) {
 
     const HW_ID = JSONObject.ID;
 
-    const existing = await Homework.findOne({ ID: HW_ID, user_id_owner: user_id });
+    const existing = await Homework.findOne({
+        ID: HW_ID, user_id_owner: user_id }
+    );
 
     if (!existing) {
         console.log("No existing homework found");
