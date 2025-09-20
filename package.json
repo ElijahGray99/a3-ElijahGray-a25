@@ -1,0 +1,30 @@
+{
+  "name": "a3-elijahgray-a25",
+  "version": "1.0.0",
+  "description": "Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template\r ===",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmcuneo/a3-persistence-a25.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmcuneo/a3-persistence-a25/issues"
+  },
+  "homepage": "https://github.com/jmcuneo/a3-persistence-a25#readme",
+  "dependencies": {
+    "cookie-session": "^2.1.1",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "mime": "^4.1.0",
+    "mongodb": "^6.20.0",
+    "mongoose": "^8.18.1"
+  }
+}
