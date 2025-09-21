@@ -12,11 +12,23 @@ const express = require('express'),
     app = express();
     
 // https://expressjs.com/en/starter/static-files.html
-app.use(express.static( 'public' ));
-app.use(express.static( 'views'  ));
+app.use('/css', express.static('public/css'));
+app.use('/js', express.static('public/js'));
+app.use('/images', express.static('public/images'));
+//app.use(express.static('views'));
+
+app.use(express.urlencoded({ extended: true }));
+
+
 app.use(express.json());
 dotenv.config();
 // SETUP
+
+// RENDERING //
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+// RENDERING //
+
 
 
 // log server activity
@@ -37,7 +49,8 @@ app.use(cookie_session({
 
 function check_login(req, res, next) {
     if (!req.session.userId) { // user not logged in
-        return;
+        console.log("user is not logged in!");
+        return res.render('login');
     } else {
         console.log(req.session.userId+ ' is logged in');
     }
@@ -103,24 +116,29 @@ run().catch(console.dir);
 // serve webpages //
 
 app.get('/', function (req, res) {
-    //res.render('index');
+    if (req.session.userId) { // user already logged in
+        return res.render('user_content', {username: req.session.username});
+    } else {
+        return res.render('login');
+    }
 })
 
 app.get('/register', function (req, res) {
-    //res.render('register');
+    return res.render('register');
 })
 
 app.get('/login', function (req, res) {
-    //res.render('login');
+    return res.render('login');
 })
 
-app.get('/logout', function (req, res) {
-    //res.render('logout');
+app.get('/user_content', check_login, function (req, res) {
+    return res.render('user_content', {username: req.session.username});
 })
 
-app.get('/user_countent', function (req, res) {
-    //res.render('logout');
-})
+app.post('/logout', function(req, res) {
+    req.session = null;
+    return res.render('login');
+});
 
 // serve webpages //
 
@@ -151,7 +169,13 @@ app.post('/register_user', async function (req, res) {
 
     //await User.insertOne(new_user);
     await new_user.save();
+
+    req.session.userId = new_user._id;
+    req.session.username = new_user.name;
+
     console.log("user registered!: ", new_user);
+
+    return res.render("user_content", {username: name})
 
 })
 
@@ -188,12 +212,16 @@ app.post('/login_user', async function (req, res) {
         req.session.username = user_login.name;
 
         console.log("User: " + user_login.name + "has logged in!");
-        await auto_update_table(req, res);
+
+        return res.render("user_content", {username: name})
+
+        //await auto_update_table(req, res);
 
     }
 
 
-    res.json({username: user_login.name });
+    ////res.json({username: name});
+
 })
 // USER ACCOUNT MANAGEMENT //
 
@@ -342,15 +370,15 @@ async function delete_data(JSONObject, user_id) {
 
     const HW_ID = JSONObject.ID;
 
-    const existing = await Homework.findOne({
-        ID: HW_ID, user_id_owner: user_id }
+    const existing = await Homework.findOne(
+        {ID: HW_ID, user_id_owner: user_id}
     );
 
     if (!existing) {
         console.log("No existing homework found");
         return false
     } else {
-        await Homework.deleteOne({ ID: HW_ID, user_id_owner: user_id });
+        await Homework.deleteOne({ID: HW_ID, user_id_owner: user_id});
         console.log(`Homework ID ${HW_ID} deleted successfully.`);
         return true;
     }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register to Assignment Priority Generator</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/extra.css">
+
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+
+<header class="d-flex align-items-center justify-content-evenly
+                bg-primary text-white
+                p-4 mb-4">
+
+    <img src="/images/icon.png" alt="logo" class = "img-fluid w-25">
+    <h1 class="fw-bold display-2 text-center">Assignment Priority Generator</h1>
+</header>
+
+<main class="register-page d-flex justify-content-center ">
+    <div class="card register-card p-4 mb-4 w-75 shadow-lg">
+        <h3 class="text-center mb-4">register</h3>
+        <form id="register-form">
+            <div class="mb-3">
+                <label for="register-id" class="form-label">Username</label>
+                <input type="text" class="form-control" id="register-id" name="name"
+                       placeholder="Enter new username" required>
+            </div>
+            <div class="mb-3">
+                <label for="pass-id" class="form-label">Password</label>
+                <input type="password" class="form-control" id="pass-id" name="password"
+                       placeholder="Enter new password" required>
+            </div>
+            <button type="button" id="register-button" class="btn btn-primary w-100 mb-2">register</button>
+            <button type="button" id="return-button" class="btn btn-secondary w-100 mb-2"> return
+            </button>
+        </form>
+    </div>
+</main>
+<script src="/js/register.js"></script>
+</body>
+</html>
