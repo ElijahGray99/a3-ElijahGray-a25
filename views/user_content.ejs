@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Using Assignment Priority Generator</title>
 
+    <meta name="description"
+          content="Manage your homework assignments here. Add, update, or delete assignments above and see your sorted table below.">
+
     <!--Bootstrap https://www.youtube.com/watch?v=MyCvTSjkD74&t=227s -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/extra.css">
@@ -39,22 +42,30 @@
             <div class="card border-success h-100 border-5  p-4">
                 <h2 class="h3 mb-3">Add / Update Assignment</h2>
                 <form id="submit-form">
-                    <div class="form-floating mb-4">
+
+                    <div class="mb-3 fw-bold">
                         <label for="ID" class="form-label">ID</label>
-                        <input type="number" class="form-control" id="ID">
+                        <input type="number" class="form-control"
+                               id="ID" placeholder= "homework ID # (e.g 3)" required>
                     </div>
-                    <div class="form-floating mb-4">
-                        <label for="subject" class="form-label">Subject</label>
-                        <input type="text" class="form-control" id="subject">
+
+                    <div class="mb-3 fw-bold">
+                        <label for="subject" class="form-label">Assignment name</label>
+                        <input type="text" class="form-control"
+                               id="subject" placeholder= "e.g a3-ElijahGray-a25" required>
                     </div>
-                    <div class="form-floating mb-4">
+
+                    <div class="mb-3 fw-bold">
                         <label for="expectedtime" class="form-label">Hours Expected</label>
-                        <input type="number" class="form-control" id="expectedtime">
+                        <input type="number" class="form-control"
+                               id="expectedtime" placeholder="hours expected to complete" required>
                     </div>
-                    <div class="mb-4 fw-bold">
+
+                    <div class="mb-3 fw-bold">
                         <label for="date" class="form-label">Due Date</label>
-                        <input type="date" class="form-control" id="date">
+                        <input type="date" class="form-control" id="date" required>
                     </div>
+
                     <button type="submit" class="btn btn-primary w-100" id="submit-button">Submit</button>
                 </form>
             </div>
