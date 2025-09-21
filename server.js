@@ -2,7 +2,7 @@
 // SETUP //
 const express = require('express'),
     fs = require('fs'),
-    mime = require('mime'),
+    //mime = require('mime'),
     mongoose = require('mongoose'),
     path = require('path'),
     dotenv = require('dotenv'),
