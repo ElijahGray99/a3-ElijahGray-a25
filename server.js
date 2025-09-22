@@ -15,20 +15,16 @@ const express = require('express'),
 app.use('/css', express.static('public/css'));
 app.use('/js', express.static('public/js'));
 app.use('/images', express.static('public/images'));
-//app.use(express.static('views'));
-
-//app.use(express.urlencoded({ extended: true }));
-
 
 app.use(express.json());
 dotenv.config();
+
 // SETUP
 
 // RENDERING //
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 // RENDERING //
-
 
 
 // log server activity
@@ -50,7 +46,8 @@ app.use(cookie_session({
 function check_login(req, res, next) {
     if (!req.session.userId) { // user not logged in
         console.log("user is not logged in!");
-        return res.render('login');
+        return;
+        //return res.render('login', {error: "not logged in" });
     } else {
         console.log(req.session.userId+ ' is logged in');
     }
@@ -75,6 +72,7 @@ const Homework_schema = new mongoose.Schema({
     date: {type: Date, required: true},
     stress_score: {type: Number},
     // provided by mongodb's internal system "_id"
+
     user_id_owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true}
 });
 
@@ -83,9 +81,6 @@ Homework_schema.index({ID: 1, user_id_owner: 1}, {unique: true});
 
 const Homework = mongoose.model('Homework', Homework_schema);
 // SCHEMAS //
-
-//const uri = "mongodb+srv://ej_test:<db_password>@testej.wxt6eas.mongodb.net/?retryWrites=true&w=majority&appName=testEJ";
-// //const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_HOST}/${process.env.MONGO_OPTIONS}`;
 
 // mongoose setup
 const uri = "mongodb+srv://"
@@ -119,7 +114,7 @@ app.get('/', function (req, res) {
     if (req.session.userId) { // user already logged in
         return res.render('user_content', {username: req.session.username});
     } else {
-        return res.render('login');
+        return res.render('login', {error: ""});
     }
 })
 
@@ -128,7 +123,7 @@ app.get('/register', function (req, res) {
 })
 
 app.get('/login', function (req, res) {
-    return res.render('login');
+    return res.render('login', {error: ""});
 })
 
 app.get('/user_content', check_login, function (req, res) {
@@ -137,7 +132,7 @@ app.get('/user_content', check_login, function (req, res) {
 
 app.post('/logout', function(req, res) {
     req.session = null;
-    return res.render('login');
+    return res.render('login', {error: ""});
 });
 
 // serve webpages //
@@ -181,6 +176,7 @@ app.post('/register_user', async function (req, res) {
 
 app.post('/login_user', async function (req, res) {
 
+
     let name = req.body.name;
     //console.log(req.body.name);
     let password = req.body.password;
@@ -188,10 +184,12 @@ app.post('/login_user', async function (req, res) {
 
     if (!name) {
         console.log("Please enter a name");
-        return;
+        //return res.render('login',{error: "Please enter a name"});
+        return res.json( {error: "test",  can_login: false})
+
     } else if (!password) {
         console.log("Please enter a password");
-        return;
+        return res.json( {error: "test",  can_login: false})
     }
 
     const user_login = await User.findOne(
@@ -200,12 +198,12 @@ app.post('/login_user', async function (req, res) {
 
     if (!user_login) {
         console.log("Username does not exist");
-        return;
+        return res.json( {error: "username doesn't exist",  can_login: false})
     }
 
     if (user_login.password !== password) {
         console.log("Passwords don't match");
-        return;
+        return res.json( {error: "password incorrect",  can_login: false})
     } else {
 
         req.session.userId = user_login._id;
@@ -213,14 +211,8 @@ app.post('/login_user', async function (req, res) {
 
         console.log("User: " + user_login.name + "has logged in!");
 
-        return res.render("user_content", {username: name})
-
-        //await auto_update_table(req, res);
-
+        return res.json( {error: "",  can_login: true})
     }
-
-
-    ////res.json({username: name});
 
 })
 // USER ACCOUNT MANAGEMENT //
@@ -419,7 +411,6 @@ const handle_new_data = async function (JSONObject, user_id) {
 
 }
 // DATABASE MANAGEMENT //
-
 function compute_stress_score(homework_date, homework_time) {
     const current_time = new Date();
     const due_date = new Date(homework_date);

@@ -1,3 +1,6 @@
+let register;
+let return_button;
+
 const register_user = async function( event ) {
     event.preventDefault();
 
@@ -27,10 +30,10 @@ const return_redirect = async function(event)  {
 // prepare elements for when the web-page loads!
 window.addEventListener("DOMContentLoaded", () => {
 
-    const register = document.querySelector("#register-button");
+    register = document.querySelector("#register-button");
     register.onclick = register_user;
 
-    const return_button = document.querySelector("#return-button");
+    return_button = document.querySelector("#return-button");
     return_button.onclick = return_redirect;
 
 });

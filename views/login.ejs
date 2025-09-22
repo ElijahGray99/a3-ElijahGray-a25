@@ -10,7 +10,6 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/extra.css">
 
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -21,7 +20,7 @@
                 bg-primary text-white
                 p-4 mb-4">
 
-    <img src="/images/icon.png" alt="logo" class="card-img w-25">
+    <img src="/images/icon.png" alt="logo" class="img-fluid">
     <h1 class="fw-bold display-2 text-center">Assignment Priority Generator</h1>
 
 </header>
@@ -36,6 +35,10 @@
                        placeholder="Enter username" required>
             </div>
 
+            <div class="d-flex justify-content-center">
+                <span id="password-error" class="h3 mb-2 text-danger-emphasis fw-semibold"></span>
+            </div>
+
             <div class="mb-3">
                 <label for="pass-id" class="form-label">Password</label>
                 <input type="password" class="form-control" id="pass-id" name="password"
@@ -47,7 +50,11 @@
             <button type="button" id="register-button" class="btn btn-secondary w-100 mb-2">Register
             </button>
         </form>
+
+
     </div>
+
+
 </main>
 <script src="/js/login.js"></script>
 </body>

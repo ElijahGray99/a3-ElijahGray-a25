@@ -10,7 +10,6 @@
 
     <!--Bootstrap https://www.youtube.com/watch?v=MyCvTSjkD74&t=227s -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/extra.css">
 
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -23,11 +22,12 @@
 
     <div class="d-flex align-items-center">
 
-        <img src="/images/icon.png" alt="logo" class="me-3" width="100" height="100">
+        <img src="/images/icon.png" alt="logo" class="me-3 img-fluid">
         <h1 class="h1 fw-bold text-decoration-underline">Assignment Priority Generator</h1>
     </div>
 
-    <span id="user-welcome" class="h3 fw-semibold">Hello, <%=username%>, you are logged in!</span>
+    <span id="user-welcome" class="h3 fw-semibold">Hello <%=username%>, you are logged in!</span>
+
     <form id="logout-form" class="">
         <button type="submit" id="logout-button" class="btn btn-light">Logout</button>
     </form>
